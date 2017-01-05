@@ -5,11 +5,22 @@ const bodyParser = require('body-parser');
 const articles = require('./routes/articles');
 const products = require('./routes/products');
 
-// app.use(bodyParser.urlencoded({
-//   extended:true
-// }))
+
+app.use(bodyParser.urlencoded({
+  extended:true
+}))
+
+app.engine('.hbs', exphbs({
+  extname: '.hbs',
+  defaultLayout: 'main',
+}));
+
+app.set('view engine', '.hbs');
 
 app.use('/products', products);
+
+
+
 
 if(!module.parent){
     app.listen(3000, () => {
