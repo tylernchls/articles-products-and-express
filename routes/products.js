@@ -23,6 +23,10 @@ const isInputValid = (req, res, next) => {
 
 router.route('/')
   .post(isObjEmpty,isInputValid, (req, res) => {
+    req.body.price = Number(req.body.price);
+    req.body.inventory = Number(req.body.inventory);
+    let uniqueId = Math.floor((Math.random() * 1000000) + 1);
+    req.body["uniqueId"] = uniqueId;
     Products.add(req.body);
     res.redirect('/products');
   })
