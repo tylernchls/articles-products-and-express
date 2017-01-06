@@ -61,7 +61,6 @@ router.route('/')
   })
   .get((req, res) => {
     let currentProducts = Products.allProducts();
-    // console.log('test', currentProducts);
     res.render('index', {products: currentProducts})
   })
 
