@@ -29,6 +29,26 @@ const uniqueId = (req, res, next) => {
   next()
 }
 
+const checkIfEdited = (req, res, next) => {
+  let id = req.params.id;
+  if(Products.editById(req.body,id) === false) {
+    res.redirect('/products/'+req.params.id+'/edit');
+  } else {
+    next();
+  }
+}
+
+const isIdValid = (req, res, next) => {
+  let id  = req.params.id;
+  if(Products.checkValidId(id) === false) {
+    res.redirect('/products/'+req.params.id);
+  } else {
+    next();
+  }
+}
+
+
+
 
 
 
@@ -37,25 +57,35 @@ router.route('/')
     Products.add(req.body);
     res.redirect('/products');
   })
+  .get((req, res) => {
+    let currentProducts = Products.allProducts();
+    console.log('test', currentProducts);
+    res.render('index', {products: currentProducts})
+  })
+
 
 
 router.route('/new')
-.get((req, res) => {
-  res.render('new');
-})
+  .get((req, res) => {
+    res.render('new');
+  })
 
 router.route('/:id')
   .get((req,res) => {
     const updatedProduct = Products.getById(Number(req.params.id));
     res.render('product');
-    // console.log('route',updatedProduct);
   })
-  .put((req, res) => {
-    Products.editById(req.body, Number(req.params.id));
+  .put(checkIfEdited,(req, res) => {
     res.redirect('/products/'+req.params.id);
   })
-  .delete((req, res) => {
+  .delete(isIdValid,(req, res) => {
     Products.deleteById(Number(req.params.id));
+    res.redirect('/products');
+  })
+
+router.route('/:id/edit')
+  .get((req, res) => {
+    res.render('edit');
   })
 
 

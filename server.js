@@ -21,6 +21,7 @@ app.use('/products', products);
 
 
 
+
 if(!module.parent){
     app.listen(3000, () => {
     console.log('Server started on port 3000');

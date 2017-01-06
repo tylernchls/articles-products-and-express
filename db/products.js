@@ -11,13 +11,15 @@ module.exports = (function(){
         products[i].name = body.name;
         products[i].price = body.price;
         products[i].inventory = body.inventory;
+        return true;
       }
     }
+    return false;
   }
 
   function _getById(id) {
     for(var i = 0; i < products.length; i++){
-      if(products[i].id == id) {
+      if(products[i].id === id) {
         return products[i];
 
       }
@@ -26,15 +28,29 @@ module.exports = (function(){
   }
 
   function _deleteById(id) {
-    for(var i =0; i < products.length; i ++) {
-      if(products[i].id == id) {
+    for(var i =0; i < products.length; i++) {
+      if(products[i].id === id) {
         products.splice(i,1);
         console.log(`{"removed" : true}`);
-        return '{"removed" : true}';
+        return products;
       }
     }
-    return '{"removed" : false}';
+    return false;
   }
+
+  function _checkValidId(id) {
+    for(var i = 0; i < products.length; i++) {
+      if(products[i].id === id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function _allProducts() {
+    return products;
+  }
+
 
 
 
@@ -42,11 +58,12 @@ module.exports = (function(){
   // ...
   //...
   return {
-    // all: _all,
+    allProducts: _allProducts,
     add: _add,
     editById: _editById,
     getById: _getById,
-    deleteById: _deleteById
+    deleteById: _deleteById,
+    checkValidId: _checkValidId
     // getByTitle: _getByTitle,
     // editByTitle: _editByTitle
   };

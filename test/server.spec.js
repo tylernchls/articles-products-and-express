@@ -4,14 +4,14 @@ const app = require('../server');
 const expect = chai.expect;
 const should = chai.should;
 
-describe('POST /products', function() {
+describe('POST /products', () => {
   // it('should create a new product', function(done) {
   //   request(app)
   //     .post('/products')
   //     .expect(200, done);
   // });
 
-  it('should redirect user back to /products if successful', function(done) {
+  it('should redirect user back to /products if successful', (done) => {
     request(app)
       .post('/products')
       .type('form')
@@ -29,7 +29,7 @@ describe('POST /products', function() {
       });
   });
 
-  it('should redirect user to /products/new if no data sent', function(done) {
+  it('should redirect user to /products/new if no data sent', (done) => {
     request(app)
     .post('/products')
     .type('form')
@@ -43,7 +43,7 @@ describe('POST /products', function() {
     });
   });
 
-  it('should have data with typeOf string', function(done) {
+  it('should have data with typeOf string', (done) => {
     request(app)
     .post('/products')
     .type('form')
@@ -112,19 +112,21 @@ describe('PUT/products/:id', () => {
       .delete('/products/1')
       .type('form')
       .send({
-        id: 1,
+        id: 1
       })
       .end((err, res) => {
         if(err) {
           throw new Error(err);
         }
+        expect(res.header.location).to.equal('/products');
+
       });
-      // expect(res.statusCode).to.equal(200);
-      // done();
 
   });
 
 });
+
+
 
 
 
