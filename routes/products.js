@@ -85,7 +85,9 @@ router.route('/:id')
 
 router.route('/:id/edit')
   .get((req, res) => {
-    res.render('edit', {productId: req.params.id});
+    const productToEdit = Products.getById(Number(req.params.id));
+    console.log(productToEdit);
+    res.render('edit', {productId: req.params.id, title: productToEdit});
   })
 
 

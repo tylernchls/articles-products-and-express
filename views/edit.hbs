@@ -1,14 +1,14 @@
-<h1>Edit Product</h1>
+<h1>Edit Product: {{title.name}} </h1>
 
 <form name="form" action="/products/{{productId}}" method="POST" enctype="application/x-www-form-urlencoded">
 
 <input type="hidden" name="_method" value="PUT">
 
-<input type="text" placeholder="Enter Product Name" name="name"><br>
+<input type="text" placeholder="New Product Name" name="name"><br><br>
 
-<input type="number" placeholder="Price" name="price"><br>
+<input type="number" placeholder="Enter New Price" name="price"><br><br>
 
-<input type="number" placeholder="Inventory" name="inventory"><br>
+<input type="number" placeholder="Enter New Inventory" name="inventory"><br><br>
 
 <input type="submit" value="Submit" id="submit">
 
