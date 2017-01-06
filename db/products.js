@@ -31,7 +31,6 @@ module.exports = (function(){
     for(var i =0; i < products.length; i++) {
       if(products[i].id === id) {
         products.splice(i,1);
-        console.log(`{"removed" : true}`);
         return products;
       }
     }

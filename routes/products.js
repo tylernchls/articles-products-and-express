@@ -63,8 +63,6 @@ router.route('/')
     res.render('index', {products: currentProducts})
   })
 
-
-
 router.route('/new')
   .get((req, res) => {
     res.render('new');
@@ -87,6 +85,8 @@ router.route('/:id/edit')
   .get((req, res) => {
     res.render('edit');
   })
+
+
 
 
 
