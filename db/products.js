@@ -9,8 +9,8 @@ module.exports = (function(){
     for(var i = 0; i < products.length; i++){
       if(products[i].id == id) {
         products[i].name = body.name;
-        products[i].price = body.price;
-        products[i].inventory = body.inventory;
+        products[i].price = parseInt(body.price);
+        products[i].inventory = parseInt(body.inventory);
         return true;
       }
     }

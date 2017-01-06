@@ -52,6 +52,8 @@ const isIdValid = (req, res, next) => {
 
 
 
+
+
 router.route('/')
   .post(isObjEmpty,isInputValid,uniqueId, (req, res) => {
     Products.add(req.body);
@@ -59,7 +61,7 @@ router.route('/')
   })
   .get((req, res) => {
     let currentProducts = Products.allProducts();
-    console.log('test', currentProducts);
+    // console.log('test', currentProducts);
     res.render('index', {products: currentProducts})
   })
 
@@ -74,6 +76,7 @@ router.route('/:id')
     res.render('product');
   })
   .put(checkIfEdited,(req, res) => {
+    Products.editById(req.body, Number(req.params.id));
     res.redirect('/products/'+req.params.id);
   })
   .delete(isIdValid,(req, res) => {
@@ -83,7 +86,7 @@ router.route('/:id')
 
 router.route('/:id/edit')
   .get((req, res) => {
-    res.render('edit');
+    res.render('edit', {productId: req.params.id});
   })
 
 
