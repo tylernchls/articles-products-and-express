@@ -72,7 +72,7 @@ router.route('/new')
 router.route('/:id')
   .get((req,res) => {
     const updatedProduct = Products.getById(Number(req.params.id));
-    res.render('product');
+    res.render('product', {product: updatedProduct});
   })
   .put(checkIfEdited,(req, res) => {
     Products.editById(req.body, Number(req.params.id));
