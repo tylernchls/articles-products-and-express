@@ -47,13 +47,7 @@ const isIdValid = (req, res, next) => {
   }
 }
 
-
-
-
-
-
-
-
+// Begin Routes
 router.route('/')
   .post(isObjEmpty,isInputValid,uniqueId, (req, res) => {
     Products.add(req.body);
@@ -90,10 +84,15 @@ router.route('/:id/edit')
     res.render('edit', {productId: req.params.id, title: productToEdit});
   })
 
-
-
-
-
-
-
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+

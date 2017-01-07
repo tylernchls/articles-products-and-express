@@ -50,12 +50,6 @@ module.exports = (function(){
     return products;
   }
 
-
-
-
-
-  // ...
-  //...
   return {
     allProducts: _allProducts,
     add: _add,
