@@ -73,6 +73,7 @@ router.route('/:id')
     res.redirect('/products/'+req.params.id);
   })
   .delete(isIdValid,(req, res) => {
+    console.log(req.params.id);
     Products.deleteById(Number(req.params.id));
     res.redirect('/products');
   })
@@ -80,7 +81,6 @@ router.route('/:id')
 router.route('/:id/edit')
   .get((req, res) => {
     const productToEdit = Products.getById(Number(req.params.id));
-    console.log(productToEdit);
     res.render('edit', {productId: req.params.id, title: productToEdit});
   })
 
