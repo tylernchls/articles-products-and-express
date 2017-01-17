@@ -5,11 +5,6 @@ const expect = chai.expect;
 const should = chai.should;
 
 describe('POST /products', () => {
-  // it('should create a new product', function(done) {
-  //   request(app)
-  //     .post('/products')
-  //     .expect(200, done);
-  // });
 
   it('should redirect user back to /products if successful', (done) => {
     request(app)

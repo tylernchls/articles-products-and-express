@@ -3,7 +3,7 @@ const router = express.Router();
 const Products = require('../db/products');
 let i = 0;
 
-
+// start middleware
 const isObjEmpty = (req, res, next) => {
   if(Object.keys(req.body).length === 0) {
     res.redirect('products/new');
@@ -46,16 +46,32 @@ const isIdValid = (req, res, next) => {
     next();
   }
 }
+// end middleware
 
-// Begin Routes
+/*
+Posts on /products, if succesful redirects back to products page.
+Else, redirects to /products/new page.
+*/
 router.route('/')
   .post(isObjEmpty,isInputValid,uniqueId, (req, res) => {
-    Products.add(req.body);
-    res.redirect('/products');
+    Products.add(req.body)
+      .then(products => {
+        res.redirect('/products');
+      })
+      .catch((err) => {
+        console.error(err);
+        res.json(err);
+      })
   })
   .get((req, res) => {
-    let currentProducts = Products.allProducts();
-    res.render('index', {products: currentProducts})
+    Products.allProducts()
+      .then(products => {
+        res.render('index', {products})
+      })
+      .catch((err) => {
+        console.error(err);
+        res.json(err);
+      })
   })
 
 router.route('/new')
@@ -65,23 +81,47 @@ router.route('/new')
 
 router.route('/:id')
   .get((req,res) => {
-    const updatedProduct = Products.getById(Number(req.params.id));
-    res.render('product', {product: updatedProduct});
+    Products.getById(Number(req.params.id))
+      .then(products => {
+        res.render('product', {product: products[0]});
+      })
+      .catch((err) => {
+        console.error(err);
+        res.json(err);
+      })
   })
   .put(checkIfEdited,(req, res) => {
-    Products.editById(req.body, Number(req.params.id));
-    res.redirect('/products/'+req.params.id);
+    Products.editById(req.body, Number(req.params.id))
+      .then(products => {
+        res.redirect('/products/'+req.params.id);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.json(err);
+      })
   })
+
   .delete(isIdValid,(req, res) => {
-    console.log(req.params.id);
-    Products.deleteById(Number(req.params.id));
-    res.redirect('/products');
+    Products.deleteById(Number(req.params.id))
+      .then(products => {
+        res.redirect('/products');
+      })
+      .catch((err) => {
+        console.error(err);
+        res.json(err);
+      })
   })
 
 router.route('/:id/edit')
   .get((req, res) => {
-    const productToEdit = Products.getById(Number(req.params.id));
-    res.render('edit', {productId: req.params.id, title: productToEdit});
+    Products.getById(Number(req.params.id))
+      .then(products => {
+        res.render('edit', {productId: req.params.id, title: products[0]});
+      })
+      .catch((err) => {
+        console.error(err);
+        res.json(err);
+      })
   })
 
 module.exports = router;

@@ -1,53 +1,47 @@
+const Promise = require('bluebird');
+const options = {
+    promiseLib: Promise
+};
+const pgp = require('pg-promise')(options);
+
+const connectionOptions = {
+  host: 'localhost',
+  database: 'articles_products',
+  user: 'tylernichols',
+  password: null
+};
+
+const db = pgp(connectionOptions);
+
 module.exports = (function(){
-  let products = [];
 
-  function _add(data) {
-    products.push(data);
+  function _add(newProductValues) {
+    return db.query('INSERT INTO products (name, price, inventory) VALUES($1, $2, $3)',
+      [newProductValues.name, newProductValues.price, newProductValues.inventory]);
   }
 
-  function _editById(body, id) {
-    for(var i = 0; i < products.length; i++){
-      if(products[i].id == id) {
-        products[i].name = body.name;
-        products[i].price = parseInt(body.price);
-        products[i].inventory = parseInt(body.inventory);
-        return true;
-      }
-    }
-    return false;
+  function _editById(productValues, productId) {
+    return db.query('UPDATE products SET name=$1, price=$2, inventory=$3 WHERE id=$4',
+      [productValues.name, productValues.price, productValues.inventory, productId]);
   }
 
-  function _getById(id) {
-    for(var i = 0; i < products.length; i++){
-      if(products[i].id === id) {
-        return products[i];
-
-      }
-    }
-    return false;
+  function _getById(productId) {
+    return db.query('SELECT * FROM products WHERE id=$1',
+      [productId]);
   }
 
-  function _deleteById(id) {
-    for(var i =0; i < products.length; i++) {
-      if(products[i].id === id) {
-        products.splice(i,1);
-        return products;
-      }
-    }
-    return false;
+  function _deleteById(productId) {
+    return db.query('DELETE FROM products WHERE id=$1',
+      [productId]);
   }
 
-  function _checkValidId(id) {
-    for(var i = 0; i < products.length; i++) {
-      if(products[i].id === id) {
-        return true;
-      }
-    }
-    return false;
+  function _checkValidId(productId) {
+     return db.query('SELECT * FROM products WHERE id=$1',
+      [productId]);
   }
 
   function _allProducts() {
-    return products;
+    return db.query('SELECT * FROM products');
   }
 
   return {
@@ -57,7 +51,5 @@ module.exports = (function(){
     getById: _getById,
     deleteById: _deleteById,
     checkValidId: _checkValidId
-    // getByTitle: _getByTitle,
-    // editByTitle: _editByTitle
   };
 })();

@@ -6,7 +6,6 @@ const articles = require('./routes/articles');
 const products = require('./routes/products');
 let methodOverride = require('method-override');
 
-
 app.use(bodyParser.urlencoded({
   extended:true
 }))
@@ -28,6 +27,7 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 
 app.use('/products', products);
+
 
 
 if(!module.parent){
