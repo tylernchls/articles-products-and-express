@@ -1,0 +1,40 @@
+const express = require('express');
+const router = express.Router();
+const Products = require('../db/articles');
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
