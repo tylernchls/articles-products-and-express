@@ -28,6 +28,9 @@ app.set('view engine', '.hbs');
 
 app.use('/products', products);
 
+app.use('/articles', articles);
+
+
 
 
 if(!module.parent){

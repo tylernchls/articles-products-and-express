@@ -66,7 +66,7 @@ router.route('/')
   .get((req, res) => {
     Products.allProducts()
       .then(products => {
-        res.render('index', {products})
+        res.render('../views/products/index', {products})
       })
       .catch((err) => {
         console.error(err);
@@ -76,14 +76,14 @@ router.route('/')
 
 router.route('/new')
   .get((req, res) => {
-    res.render('new');
+    res.render('../views/products/new');
   })
 
 router.route('/:id')
   .get((req,res) => {
     Products.getById(Number(req.params.id))
       .then(products => {
-        res.render('product', {product: products[0]});
+        res.render('../views/products/product', {product: products[0]});
       })
       .catch((err) => {
         console.error(err);
@@ -116,7 +116,7 @@ router.route('/:id/edit')
   .get((req, res) => {
     Products.getById(Number(req.params.id))
       .then(products => {
-        res.render('edit', {productId: req.params.id, title: products[0]});
+        res.render('../views/products/edit', {productId: req.params.id, title: products[0]});
       })
       .catch((err) => {
         console.error(err);
